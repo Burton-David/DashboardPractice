@@ -2,10 +2,8 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import pandas as pd
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-# This is the Dash Constructor.  Make sure adding "app = dash.Dash(__name__)" to dash init
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 '''
 There are a few things to keep in mind when including assets automatically:
 
@@ -30,41 +28,32 @@ eg: app = dash.Dash(__name__, meta_tags=[...]). When you run your application th
 flask command or gunicorn/waitress), the __main__ module will no longer be located where app.py is. By explicitly
 setting __name__, D ash will be able to locate the relative assets folder correctly.
 '''
-colors = {
-    'background': '#111111',
-    'text': '#7FDBFF'
-}
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import pandas as pd
 
-app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
-    html.H1(
-        children='Hello Dash',
-        style={
-            'textAlign': 'center',
-            'color': colors['text']
-        }
-    ),
+df = pd.read_csv("KingsCountyHousingLR/kc_house_data.csv")
 
-    html.Div(children='Dash: A web application framework for Python.', style={
-        'textAlign': 'center',
-        'color': colors['text']
-    }),
 
-    dcc.Graph(
-        id='example-graph-2',
-        figure={
-            'data': [
-                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
-            ],
-            'layout': {
-                'plot_bgcolor': colors['background'],
-                'paper_bgcolor': colors['background'],
-                'font': {
-                    'color': colors['text']
-                }
-            }
-        }
+def generate_table(dataframe, max_rows=10):
+    return html.Table(
+        # Header
+        [html.Tr([html.Th(col) for col in dataframe.columns])] +
+
+        # Body
+        [html.Tr([
+            html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
+        ]) for i in range(min(len(dataframe), max_rows))]
     )
+
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+# This is the Dash Constructor.  Make sure adding "app = dash.Dash(__name__)" to dash init
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div(children=[
+    html.H4(children='Kings County Housing Data'),
+    generate_table(df)
 ])
 
 if __name__ == '__main__':
