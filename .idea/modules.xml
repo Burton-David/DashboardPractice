@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/DashboardPractice.iml" filepath="$PROJECT_DIR$/.idea/DashboardPractice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../dash-component-boilerplate/.idea/dash-component-boilerplate.iml" filepath="$PROJECT_DIR$/../dash-component-boilerplate/.idea/dash-component-boilerplate.iml" />
     </modules>
   </component>
 </project>

@@ -34,7 +34,16 @@ import dash_html_components as html
 import pandas as pd
 
 df = pd.read_csv("KingsCountyHousingLR/kc_house_data.csv")
-
+labels = df.columns
+# set-up Some core components
+dcc.Dropdown(
+    options=[
+        {'label':labels},
+        # {'label': 'Montréal', 'value': 'MTL'},
+        # {'label': 'San Francisco', 'value': 'SF'}
+    ],
+    value='MTL'
+)
 
 def generate_table(dataframe, max_rows=10):
     return html.Table(
@@ -54,7 +63,8 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(children=[
     html.H4(children='Kings County Housing Data'),
     generate_table(df)
-])
+]),
+dcc.
 
 if __name__ == '__main__':
     app.run_server(debug=True)
